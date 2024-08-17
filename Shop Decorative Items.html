@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shop - Crochet Creations</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background-color: #FFF5E1; /* Light Beige */
+            color: #8B7355; /* Dark Beige */
+            font-family: Arial, sans-serif;
+        }
+
+        header, footer {
+            background-color: #FFCCCB; /* Pastel Pink */
+            color: #FFF5E1; /* Light Beige */
+            text-align: center;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+        }
+
+        header .logo img {
+            height: 100px;
+            width: auto;
+        }
+
+        nav {
+            background-color: #F8B7B7; /* Light Coral */
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        nav a {
+            margin: 0 15px;
+            color: #8B7355; /* Dark Beige */
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .submenu {
+            background-color: #F8B7B7; /* Light Coral */
+            text-align: center;
+            padding: 5px 0;
+        }
+
+        .submenu a {
+            margin: 0 10px;
+            color: #8B7355; /* Dark Beige */
+            text-decoration: none;
+        }
+
+        .cart-button {
+            background-color: #FF69B4; /* Hot Pink */
+            color: #FFF5E1; /* Light Beige */
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .cart-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: #FFF5E1; /* Light Beige */
+            border: 1px solid #FF69B4; /* Hot Pink */
+            width: 300px;
+            max-height: 400px;
+            overflow-y: auto;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            text-align: left;
+        }
+
+        .cart-dropdown p {
+            margin: 10px;
+        }
+
+        .cart-dropdown ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 10px;
+        }
+
+        .cart-dropdown ul li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 0;
+        }
+
+        .cart-dropdown ul li button {
+            background-color: #FF69B4; /* Hot Pink */
+            color: #FFF5E1; /* Light Beige */
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        .cart-dropdown .total {
+            margin: 10px;
+            font-weight: bold;
+        }
+
+        .cart-dropdown .payment-methods {
+            margin: 10px;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap; /* Enable flexbox wrap */
+        }
+
+        .shop-item {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 15px;
+            text-align: center;
+            width: 200px; /* Ensures items are properly aligned */
+        }
+
+        .shop-item img {
+            width: 100%;
+            height: 65%;
+            border-radius: 15px; /* Rounded edges */
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .shop-item img:hover {
+            opacity: 0; /* Make the original image disappear on hover */
+        }
+
+        .shop-item img.secondary {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .shop-item img:hover + .secondary {
+            opacity: 1; /* Make the secondary image appear on hover */
+        }
+
+        .label {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #FFCCCB; /* Pastel Pink */
+            color: #FFF5E1; /* Light Beige */
+            padding: 5px 10px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+
+        .new {
+            background-color: #FF69B4; /* Hot Pink */
+        }
+
+        .popular {
+            background-color: #FFD700; /* Gold */
+        }
+
+        .shop-item .description {
+            font-size: 14px;
+            margin: 10px 0;
+        }
+
+        .shop-item .price {
+            font-size: 16px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+
+        .shop-item .size-buttons button {
+            background-color: #F8B7B7; /* Light Coral */
+            color: #FFF5E1; /* Light Beige */
+            border: none;
+            margin: 5px 2px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .shop-item .add-to-cart {
+            background-color: #FF69B4; /* Hot Pink */
+            color: #FFF5E1; /* Light Beige */
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        footer img {
+            width: 30px;
+            height: 30px;
+            margin: 0 10px;
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <img src="Crochet/Crochet Creations 1.jpg" alt="Crochet Creations Logo">
+    </div>
+    <div>
+        <button class="cart-button" onclick="toggleCart()">Cart (<span id="cart-count">0</span>)</button>
+        <div class="cart-dropdown" id="cart-dropdown">
+            <p>Cart Items:</p>
+            <ul id="cart-items"></ul>
+            <p class="total">Total: $<span id="cart-total">0.00</span></p>
+            <div class="payment-methods">
+                <p>Payment Methods:</p>
+                <button onclick="checkout('Credit Card')">Credit Card</button>
+                <button onclick="checkout('PayPal')">PayPal</button>
+                <button onclick="checkout('Bank Transfer')">Bank Transfer</button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="About Us.html">About Us</a>
+    <a href="Shop.html">Shop</a>
+    <a href="Contact Us.html">Contact Us</a>
+    <a href="Ratings and Reviews.html">Reviews/Ratings</a>
+</nav>
+
+<div class="submenu">
+    <a href="Shop Outfits.html">Outfits</a>
+    <a href="Shop Bags.html">Bags</a>
+    <a href="Shop Water bottle holders.html">Water Bottle Holders</a>
+    <a href="Shop Jewelry.html">Jewelry</a>
+    <a href="Shop Headphone covers.html">Headphone Covers</a>
+    <a href="Shop Stuffed animals.html">Stuffed Animals/Toys</a>
+    <a href="Shop Keychains.html">Keychains</a>
+    <a href="Shop Decorative Items.html">Decorative Items</a>
+</div>
+<div class="container">
+    <div class="shop-item" data-name="Basket Bouquet" data-price="200.00">
+        <div class="label new">New</div>
+        <img src="Crochet/Basket Bouquet.jpg" alt="Item 1">
+        <p class="description">Basket Bouquet</p>
+        <p class="price">$200.00</p>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+    <div class="shop-item" data-name="Bouquet" data-price="130.00">
+        <div class="label popular">Popular</div>
+        <img src="Crochet/Bouquet.jpg" alt="Item 2">
+        <p class="description">Bouquet</p>
+        <p class="price">$130.00</p>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+    <div class="shop-item" data-name="Cake Box Cover" data-price="150.00">
+        <img src="Crochet/Box Cover.jpg" alt="Item 3">
+        <p class="description">Cake Box Cover</p>
+        <p class="price">$150.00</p>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+     <div class="shop-item" data-name="Vines" data-price="50.00">
+        <div class="label new">New</div>
+        <img src="Crochet/Charger Vines.jpg" alt="Item 1">
+        <p class="description">Vines Charger Sleeve</p>
+        <p class="price">$50.00</p>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+     <div class="shop-item" data-name="Hearts" data-price="40.00">
+        <img src="Crochet/Hearts.jpg" alt="Item 1">
+        <p class="description">Hearts</p>
+        <p class="price">$40.00</p>
+        <button class="add-to-cart">Add to Cart</button>
+    </div>
+</div>
+
+<div class="footer">
+            <p>&copy; 2024 Crochet Creations. All rights reserved.</p>
+            <div class="social-media">
+                <a href="https://www.facebook.com" target="_blank"><img src="Crochet/Pink Facebook.jpg" alt="Facebook" style="width:2%"></a>
+                <a href="https://www.instagram.com" target="_blank"><img src="Crochet/Pink Instagram.jpg" alt="Instagram" style="width:2%"></a>
+                <a href="https://www.tiktok.com" target="_blank"><img src="Crochet/Pink Tiktok.jpg" alt="Crochet/Pink Tiktok" style="width:2%"></a>
+                <a href="https://www.youtube.com" target="_blank"><img src="Crochet/Pink Youtube.jpg" alt="Crochet/ Pink Youtube" style="width:2%"></a>
+                <a href="https://www.pinterest.com" target="_blank"><img src="Crochet/Pink Pinterest.jpg" alt="Crochet/Pink Pinterest" style="width:2%"></a>
+            </div>
+        </div>
+    </footer>
+
+<script>
+    function toggleCart() {
+        const cartDropdown = document.getElementById('cart-dropdown');
+        cartDropdown.style.display = cartDropdown.style.display === 'block' ? 'none' : 'block';
+    }
+
+    const cartItems = [];
+    let cartTotal = 0;
+
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+        button.addEventListener('click', () => {
+            const shopItem = button.closest('.shop-item');
+            const itemName = shopItem.getAttribute('data-name');
+            const itemPrice = parseFloat(shopItem.getAttribute('data-price'));
+
+            const cartItem = cartItems.find(item => item.name === itemName);
+            if (cartItem) {
+                cartItem.quantity += 1;
+            } else {
+                cartItems.push({ name: itemName, price: itemPrice, quantity: 1 });
+            }
+
+            updateCart();
+        });
+    });
+
+    function updateCart() {
+        const cartList = document.getElementById('cart-items');
+        cartList.innerHTML = '';
+
+        cartItems.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = `${item.name} - $${item.price} x ${item.quantity}`;
+            const removeButton = document.createElement('button');
+            removeButton.textContent = 'Remove';
+            removeButton.addEventListener('click', () => {
+                const itemIndex = cartItems.indexOf(item);
+                if (itemIndex > -1) {
+                    cartItems.splice(itemIndex, 1);
+                    updateCart();
+                }
+            });
+            li.appendChild(removeButton);
+            cartList.appendChild(li);
+        });
+
+        cartTotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+        document.getElementById('cart-total').textContent = cartTotal.toFixed(2);
+        document.getElementById('cart-count').textContent = cartItems.length;
+    }
+
+    function checkout(method) {
+        alert(`Checking out with ${method}. Total: $${cartTotal.toFixed(2)}`);
+    }
+</script>
+
+</body>
+</html>

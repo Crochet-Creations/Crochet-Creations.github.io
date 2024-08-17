@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shop - Crochet Creations</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background-color: #FFF5E1; /* Light Beige */
+            color: #8B7355; /* Dark Beige */
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        header, footer {
+            background-color: #FFCCCB; /* Pastel Pink */
+            color: #FFF5E1; /* Light Beige */
+            text-align: center;
+            padding: 20px ;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+        }
+
+        header .logo img {
+            height: 100px;
+            width:  auto;
+           display: flex;
+           justify-content: center;
+           align-items: center;
+        }
+
+        nav {
+            background-color: #F8B7B7; /* Light Coral */
+            text-align: center;
+            padding: 10px 0;
+        }
+
+nav a {
+    margin: 0 15px;
+    color: #8B7355; /* Dark Beige */
+    text-decoration: none;
+            font-weight: bold;
+}
+        footer img {
+            width: 30px;
+            height: 30px;
+            margin: 0 10px;
+ }
+
+        h1 {
+            text-align: center;
+        }
+
+        .rating-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .stars {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .stars label {
+            font-size: 40px;
+            color: #FFD700; /* Gold */
+            cursor: pointer;
+        }
+
+        .stars input {
+            display: none;
+        }
+
+        .stars input:checked ~ label {
+            color: #FFD700; /* Gold */
+        }
+
+        .stars input:checked ~ label ~ label {
+            color: #CCCCCC; /* Light Gray */
+        }
+
+        .review-input {
+            display: block;
+            width: 50%;
+            margin: 0 auto 20px auto;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #8B7355; /* Dark Beige */
+        }
+
+        .submit-button {
+            background-color: #FF69B4; /* Hot Pink */
+            color: #FFF5E1; /* Light Beige */
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .reviews {
+            margin-top: 40px;
+        }
+
+        .review-item {
+            border-bottom: 1px solid #8B7355; /* Dark Beige */
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        .review-item:last-child {
+            border-bottom: none;
+        }
+
+        .review-item p {
+            margin: 5px 0;
+        }
+
+        .review-item .stars-display {
+            color: #FFD700; /* Gold */
+        }
+}
+@media screen and (max-width:600px) {
+  .column {
+    width: 100%;
+  }
+
+.footer {
+   position: fixed;
+   left: 0;
+   bottom: 15;
+   width: 100%;
+   background-color: #F4C2C2;
+   color: white;
+   text-align: center;
+}
+    </style>
+</head>
+<body>
+
+
+<header>
+    <div class="logo">
+        <img src="Crochet/Crochet Creations 1.jpg" alt="Crochet Creations Logo">
+    </div>
+</header>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="About Us.html">About Us</a>
+    <a href="Shop.html">Shop</a>
+    <a href="Contact Us.html">Contact Us</a>
+    <a href="Ratings and Reviews.html">Reviews/Ratings</a>
+</nav>
+
+<body>
+    
+
+<h1>Customer Reviews</h1>
+
+<div class="rating-container">
+    <div class="stars">
+        <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+        <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+        <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+        <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+        <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+    </div>
+    <textarea id="review-text" class="review-input" placeholder="Write your review here..."></textarea>
+    <button class="submit-button" onclick="submitReview()">Submit Review</button>
+</div>
+
+<div class="reviews" id="reviews">
+    <!-- Placeholder for reviews -->
+</div>
+
+<script>
+    const reviews = [
+        { rating: 5, text: "Amazing craftsmanship! I love my new bag." },
+        { rating: 4, text: "The keychain was adorable, but shipping took a bit longer than expected." },
+        { rating: 5, text: "My daughter loves the crochet animals. They're so cute and well-made!" },
+        { rating: 3, text: "The earrings were nice, but the color wasn't exactly what I expected." },
+        { rating: 4, text: "Good quality, but I wish there were more size options." },
+        { rating: 5, text: "The water bottle holder is perfect for my hikes. Thank you!" },
+        { rating: 5, text: "Such a great shop! I'll definitely be back for more." },
+        { rating: 4, text: "The necklace was beautiful, but the clasp was a bit tricky to use." },
+        { rating: 5, text: "Fantastic customer service and beautiful products!" },
+        { rating: 3, text: "The stuffed animal was cute, but I expected it to be a bit bigger." },
+        { rating: 4, text: "The colors of the outfit were vibrant and exactly as shown on the website." },
+        { rating: 5, text: "I love my new crochet hat! It's perfect for winter." },
+        { rating: 4, text: "The bag is well-made, but it could use a stronger lining." },
+        { rating: 5, text: "Best crochet items I've ever purchased. Highly recommend!" },
+        { rating: 4, text: "The keychain was great, but the delivery took longer than expected." },
+        { rating: 5, text: "The necklace is stunning. I've received so many compliments!" },
+        { rating: 4, text: "Great quality, but I wish the shipping was faster." },
+        { rating: 5, text: "The crochet toys are adorable and perfect for my kids." },
+        { rating: 5, text: "Absolutely love the water bottle holder! Perfect for summer." },
+        { rating: 4, text: "The earrings were lovely, but I wish there were more designs available." }
+    ];
+
+    function displayReviews() {
+        const reviewsContainer = document.getElementById('reviews');
+        reviewsContainer.innerHTML = '';
+        reviews.forEach(review => {
+            const reviewItem = document.createElement('div');
+            reviewItem.classList.add('review-item');
+            reviewItem.innerHTML = `
+                <div class="stars-display">${'&#9733;'.repeat(review.rating)}</div>
+                <p>${review.text}</p>
+            `;
+            reviewsContainer.appendChild(reviewItem);
+        });
+    }
+
+    function submitReview() {
+        const selectedRating = document.querySelector('input[name="rating"]:checked');
+        const reviewText = document.getElementById('review-text').value;
+
+        if (selectedRating && reviewText.trim()) {
+            reviews.unshift({ rating: parseInt(selectedRating.value), text: reviewText });
+            displayReviews();
+            document.querySelector('input[name="rating"]:checked').checked = false;
+            document.getElementById('review-text').value = '';
+            alert('Thank you for your review!');
+        } else {
+            alert('Please select a rating and write a review.');
+        }
+    }
+
+    // Display initial reviews
+    displayReviews();
+</script>
+
+</body>
+</html>
+
+
+<div class="footer">
+            <p>&copy; 2024 Crochet Creations. All rights reserved.</p>
+            <div class="social-media">
+                <a href="https://www.facebook.com" target="_blank"><img src="Crochet/Pink Facebook.jpg" alt="Facebook" style="width:2%"></a>
+                <a href="https://www.instagram.com" target="_blank"><img src="Crochet/Pink Instagram.jpg" alt="Instagram" style="width:2%"></a>
+                <a href="https://www.tiktok.com" target="_blank"><img src="Crochet/Pink Tiktok.jpg" alt="Crochet/Pink Tiktok" style="width:2%"></a>
+                <a href="https://www.youtube.com" target="_blank"><img src="Crochet/Pink Youtube.jpg" alt="Crochet/ Pink Youtube" style="width:2%"></a>
+                <a href="https://www.pinterest.com" target="_blank"><img src="Crochet/Pink Pinterest.jpg" alt="Crochet/Pink Pinterest" style="width:2%"></a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
